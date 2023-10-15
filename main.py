@@ -3,8 +3,9 @@ import math
 
 pygame.init()
 
-WIDTH, HEIGHT = 800, 600
-win = pygame.display.set_mode((WIDTH, HEIGHT))
+WIDTH: int = 800
+HEIGHT: int = 600
+win: pygame.display = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Gravitational Slingshot Effect")
 
 PLANET_MASS: int = 100
@@ -15,8 +16,8 @@ PLANET_SIZE: int = 50
 OBJ_SIZE: int = 5
 VEL_SCALE: int = 100
 
-BG = pygame.transform.scale(pygame.image.load("background.jpg"), (WIDTH, HEIGHT))
-PLANET = pygame.transform.scale(pygame.image.load("jupiter.png"), (PLANET_SIZE * 2, PLANET_SIZE * 2))
+BG: pygame.transform.scale = pygame.transform.scale(pygame.image.load("background.jpg"), (WIDTH, HEIGHT))
+PLANET: pygame.transform.scale = pygame.transform.scale(pygame.image.load("jupiter.png"), (PLANET_SIZE * 2, PLANET_SIZE * 2))
 
 WHITE: tuple = (255, 255, 255)
 RED: tuple = (255, 0, 0)
@@ -29,7 +30,7 @@ class Planet:
         self.y = y
         self.mass = mass
 
-    def draw(self):
+    def draw(self) -> None:
         win.blit(PLANET, (self.x - PLANET_SIZE, self.y - PLANET_SIZE))
 
 
@@ -41,7 +42,7 @@ class Spacecraft:
         self.vel_y = vel_y
         self.mass = mass
 
-    def move(self, planet=None):
+    def move(self, planet=None) -> None:
         distance = math.sqrt((self.x - planet.x)**2 + (self.y - planet.y)**2)
         force = (G * self.mass * planet.mass) / distance**2
         acceleration = force / self.mass
@@ -55,7 +56,7 @@ class Spacecraft:
         self.x += self.vel_x
         self.y += self.vel_y
 
-    def draw(self):
+    def draw(self) -> None:
         pygame.draw.circle(win, RED, (int(self.x), int(self.y)), OBJ_SIZE)
 
 
@@ -70,11 +71,11 @@ def create_ship(location, mouse) -> Spacecraft:
 
 def main() -> None:
     running: bool = True
-    clock = pygame.time.Clock()
+    clock: pygame.time.Clock     = pygame.time.Clock()
 
     planet: Planet = Planet(WIDTH // 2, HEIGHT // 2, PLANET_MASS)
 
-    objects = []
+    objects: list = []
     temp_obj_pos = None
 
     while running:
