@@ -17,7 +17,8 @@ OBJ_SIZE: int = 5
 VEL_SCALE: int = 100
 
 BG: pygame.transform.scale = pygame.transform.scale(pygame.image.load("background.jpg"), (WIDTH, HEIGHT))
-PLANET: pygame.transform.scale = pygame.transform.scale(pygame.image.load("jupiter.png"), (PLANET_SIZE * 2, PLANET_SIZE * 2))
+PLANET: pygame.transform.scale = pygame.transform.scale(pygame.image.load("jupiter.png"),
+                                                        (PLANET_SIZE * 2, PLANET_SIZE * 2))
 
 WHITE: tuple = (255, 255, 255)
 RED: tuple = (255, 0, 0)
@@ -43,8 +44,8 @@ class Spacecraft:
         self.mass = mass
 
     def move(self, planet=None) -> None:
-        distance = math.sqrt((self.x - planet.x)**2 + (self.y - planet.y)**2)
-        force = (G * self.mass * planet.mass) / distance**2
+        distance = math.sqrt((self.x - planet.x) ** 2 + (self.y - planet.y) ** 2)
+        force = (G * self.mass * planet.mass) / distance ** 2
         acceleration = force / self.mass
         angle = math.atan2(planet.y - self.y, planet.x - self.x)
         acceleration_x = acceleration * math.cos(angle)
@@ -71,7 +72,7 @@ def create_ship(location, mouse) -> Spacecraft:
 
 def main() -> None:
     running: bool = True
-    clock: pygame.time.Clock     = pygame.time.Clock()
+    clock: pygame.time.Clock = pygame.time.Clock()
 
     planet: Planet = Planet(WIDTH // 2, HEIGHT // 2, PLANET_MASS)
 
@@ -97,14 +98,14 @@ def main() -> None:
         win.blit(BG, (0, 0))
 
         if temp_obj_pos:
-            pygame.draw.line(win, WHITE,temp_obj_pos, mouse_pos, 2)
+            pygame.draw.line(win, WHITE, temp_obj_pos, mouse_pos, 2)
             pygame.draw.circle(win, RED, temp_obj_pos, OBJ_SIZE)
 
         for obj in objects[:]:
             obj.draw()
             obj.move(planet)
             off_screen = obj.x < 0 or obj.x > WIDTH or obj.y < 0 or obj.y > HEIGHT
-            collided = math.sqrt((obj.x - planet.x)**2 + (obj.y - planet.y)**2) <= PLANET_SIZE
+            collided = math.sqrt((obj.x - planet.x) ** 2 + (obj.y - planet.y) ** 2) <= PLANET_SIZE
             if off_screen or collided:
                 objects.remove(obj)
 
